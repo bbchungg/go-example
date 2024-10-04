@@ -1,10 +1,10 @@
 {
-  "name": "bc-example",
+  "name": "Block Step",
   "steps": [
     {
       "type": "script",
       "name": ":pipeline:",
-      "command": "?"
+      "command": "buildkite-agent pipeline upload"
     }
   ]
 }
