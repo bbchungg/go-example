@@ -1,8 +1,16 @@
 steps:
+  - block: "Enter Name"
+    prompt: "Please enter a name for the greeting"
+    fields:
+      - text: "Name"
+        key: "name"
+        required: true
+
   - key: build-docker
     label: ':docker: Build Docker Image'
     command:
       - docker build -f ../Dockerfile -t hello-app . # Reference Dockerfile relative to the .buildkite directory
       - docker save hello-app -o hello-app.tar # Save the Docker image as a .tar file
+      - echo "Hello, ${BUILDKITE_ENV_NAME}" # Print the greeting using the input name
     artifact_paths:
       - 'hello-app.tar' # Upload the Docker image as an artifact
