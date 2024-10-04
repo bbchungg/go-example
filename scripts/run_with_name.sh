@@ -9,11 +9,15 @@ until [ ${#NAME} -gt 0 ]; do
   sleep 1
 done
 
+# Verify that the hello binary exists in tmp directory
+echo "Listing files in tmp directory:"
+ls -la ./tmp
+
 # Create a Dockerfile that will package the Go binary
 cat <<EOF > ./tmp/Dockerfile
 FROM alpine:latest
 WORKDIR /app
-COPY ./hello /app/hello
+COPY hello /app/hello
 RUN chmod +x /app/hello
 ENTRYPOINT ["/app/hello"]
 EOF
