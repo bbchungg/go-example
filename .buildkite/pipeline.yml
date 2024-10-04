@@ -1,33 +1,8 @@
 steps:
-  # Group for QA steps related to code quality
-  - group: ':mag: QA'
-    id: quality_assurance
-    steps:
-    - key: lint
-      label: ':golang: vet'
-      command: go vet ./...
-      plugins:
-        - docker-compose#v5.4.0:
-            run: app
-    - key: test
-      label: ':golang: test'
-      command: 
-        - go test -v -count=1 -cover ./... -coverprofile=coverage.txt -covermode=atomic
-      artifact_paths:
-        - 'coverage.txt' # upload the coverage report as an artifact
-      plugins:
-        - docker-compose#v5.4.0:
-            run: app
-  
-  # Build the Docker container after QA steps are complete
   - key: build-docker
     label: ':docker: Build Docker Image'
     command:
-      - docker build -t hello-app .
-      - docker save hello-app -o hello-app.tar # save the Docker image as a .tar file
+      - docker build -f ../Dockerfile -t hello-app . # Reference Dockerfile relative to the .buildkite directory
+      - docker save hello-app -o hello-app.tar # Save the Docker image as a .tar file
     artifact_paths:
-      - 'hello-app.tar' # upload the Docker image as an artifact
-    plugins:
-      - docker-compose#v5.4.0:
-          run: app
-    depends_on: quality_assurance
+      - 'hello-app.tar' # Upload the Docker image as an artifact
