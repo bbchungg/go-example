@@ -13,7 +13,7 @@ done
 cat <<EOF > ./tmp/Dockerfile
 FROM alpine:latest
 WORKDIR /app
-COPY hello /app/hello
+COPY ./hello /app/hello
 RUN chmod +x /app/hello
 ENTRYPOINT ["/app/hello"]
 EOF
