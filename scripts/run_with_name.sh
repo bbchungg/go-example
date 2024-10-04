@@ -17,7 +17,7 @@ ls -la ./tmp
 cat <<EOF > ./tmp/Dockerfile
 FROM alpine:latest
 WORKDIR /app
-COPY hello /app/hello
+COPY build/hello /app/hello
 RUN chmod +x /app/hello
 ENTRYPOINT ["/app/hello"]
 EOF
